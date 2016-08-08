@@ -1,0 +1,95 @@
+{% extends "base2.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}index{% endblock %}
+
+{% block content %}
+{{super()}}
+<div class="container">
+    <table class="table-bordered col-md-12">
+        <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td class="col-md-10">
+
+                <!--评论块-->
+                <div class="rate_block">
+                    <!--初次评论-->
+                    <div>{{comment.f_rate}}</div>
+                    <!--如果初次有图片,那么遍历列表生成ul-->
+                    {% if comment.f_pic %}
+                    {% set c_feval=comment.f_pic|turn_eval %}
+                    <div class="image_area">
+                        <ul>
+                            {% for pic_furl in c_feval %}
+                            <li>
+                                <div>
+                                    <button class="btn thumbnail" role="button"
+                                       data-target="#{{comment.com_id}}">
+                                        <img src="{{pic_furl}}">
+                                    </button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                       <div class="image_viewer" id="{{comment.com_id}}">
+                            <img src="">
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!--追评块-->
+                <div class="append_block">
+                    <!--如果有追评,显示追评-->
+                    {% if comment.s_rate %}
+                    <div>{{comment.s_rate}}</div>
+                    {% endif %}
+                    <!--如果有追评图片,显示追平图片ul-->
+                    {% if comment.s_pic %}
+                    {% set c_seval=comment.s_pic|turn_eval %}
+                    <div class="image_area">
+                        <ul>
+                            {% for pic_surl in c_seval %}
+                            <li>
+                                <div>
+                                    <button class="btn thumbnail" role="button"
+                                       data-target="#append_{{comment.com_id}}">
+                                        <img src="{{pic_surl}}">
+                                    </button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="image_viewer" id="append_{{comment.com_id}}">
+                            <img src="">
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </td>
+
+            <!--购买颜色和数据库处理-->
+            <td class="col-md-2">
+                <div>{{comment.good}}</div>
+                <a href="{{url_for('main.delete_rate',id=comment.com_id)}}">
+                    <span class="label label-danger">没营养</span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, 'session[past_endpoint]') }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{url_for('static',filename='scripts.js')}}"></script>
+{% endblock %}

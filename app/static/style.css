@@ -1,0 +1,51 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    padding-top: 60px;
+    padding-bottom: 10px;
+}
+
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+    background: #CCCCCC;
+}
+
+table .thumbnail img {
+    width: 100%
+}
+
+div.pagination {
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+.image_area li {
+    float: left;
+    width: 100px;
+}
+
+.image_area ul {
+    list-style: none;
+}
+
+.image_viewer {
+    clear: left;
+    display: none;
+}
+
+.image_viewer img{
+    height: 400px;
+}
+
+.append_block {
+    margin-left: 40px;
+    clear: left;
+}
+
+.image_viewer_appear{
+    margin-left: 40px;
+    margin-bottom: 20px;
+    padding: 4px;
+    border:1px solid #ddd;
+}

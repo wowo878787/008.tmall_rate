@@ -1,0 +1,34 @@
+{% block doc %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% block html %}
+<head>
+    {% block head %}
+    {% block metas %}
+    <meta charset="UTF-8">
+    {% endblock metas %}
+    <title>{% block title %}{% endblock %}</title>
+    {% block styles %}
+    <!-- Bootstrap -->
+    <link href="{{url_for('static', filename='bootstrap.css')}}" rel="stylesheet">
+    {% endblock styles %}
+    {% endblock head %}
+</head>
+<body>
+    {% block body %}
+    {% block navbar %}
+
+    {% endblock navbar %}
+    {% block content %}
+    {% endblock content %}
+
+    {% block scripts %}
+    <script src="{{url_for('static', filename='jquery-2.2.2.js')}}"></script>
+    <script src="{{url_for('static', filename='bootstrap.js')}}"></script>
+    {% endblock scripts %}
+    {% endblock body %}
+
+</body>
+{% endblock html %}
+</html>
+{% endblock doc %}
