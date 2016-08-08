@@ -84,7 +84,7 @@
 
 {% if pagination %}
 <div class="pagination">
-    {{ macros.pagination_widget(pagination, 'session[past_endpoint]') }}
+    {{ macros.pagination_widget(pagination, session['past_endpoint'],color=current_color) }}
 </div>
 {% endif %}
 {% endblock %}

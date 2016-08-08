@@ -17,6 +17,7 @@ good_colors = colors.good_colors  # 直接在视图函数里面调用colors.good
 def index():
     session['past_path'] = request.path
     session['past_endpoint']=request.endpoint
+    session['past_sth']=unicode(request.url_rule)
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.com_time.desc()).paginate(
         page, per_page=current_app.config['FLASKY_RATE_PER_PAGE'],
@@ -29,6 +30,7 @@ def index():
 def colors(color):
     session['past_path'] = request.path
     session['past_endpoint']=request.endpoint
+    session['past_sth']=unicode(request.url_rule)
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.filter_by(good=color).paginate(
         page, per_page=current_app.config['FLASKY_RATE_PER_PAGE'],
