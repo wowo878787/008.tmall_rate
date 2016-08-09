@@ -52,8 +52,14 @@ def delete_rate(id):
 
 @main.route('/refresh_data')
 def refresh_data():
+    from sqlalchemy.exc import IntegrityError
+
     flash('data已刷新.', 'alert alert-info')
-    Comment.generate_data()
+    try:
+        Comment.generate_data()
+    except IntegrityError:
+        db.session.rollback()
+        flash('不用更新.', 'alert alert-info')
     return redirect(url_for('.index'))
 
 
