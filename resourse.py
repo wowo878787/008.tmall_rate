@@ -3,8 +3,8 @@ import urllib2, requests
 import sys, json, random, time
 
 root_doc = 'https://rate.tmall.com/list_detail_rate.htm?itemId=40889098453&spuId=295158557&sellerId=194315137&order=1&append=0&picture=1&currentPage='
-min_page = 82
-max_page = 100
+min_page = 1
+max_page = 2
 first_key = '"rateDetail":'
 typeEncode = sys.getfilesystemencoding()
 
