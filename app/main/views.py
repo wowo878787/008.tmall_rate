@@ -16,33 +16,37 @@ good_colors = colors.good_colors  # 直接在视图函数里面调用colors.good
 @main.route('/', methods=['GET', 'POST'])
 def index():
     session['past_path'] = request.path
-    session['past_endpoint']=request.endpoint
-    session['past_sth']=unicode(request.url_rule)
+    session['past_endpoint'] = request.endpoint
+    session['past_sth'] = unicode(request.url_rule)
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.com_time.desc()).paginate(
         page, per_page=current_app.config['FLASKY_RATE_PER_PAGE'],
         error_out=False)
     comments = pagination.items
-    return render_template('index.html', pagination=pagination, comments=comments, colors=good_colors)
+    first_exist = Comment.query.first()
+    return render_template('index.html', pagination=pagination, comments=comments,
+                           colors=good_colors, first_exist=first_exist)
 
 
 @main.route('/colors/<color>')
 def colors(color):
     session['past_path'] = request.path
-    session['past_endpoint']=request.endpoint
-    session['past_sth']=unicode(request.url_rule)
+    session['past_endpoint'] = request.endpoint
+    session['past_sth'] = unicode(request.url_rule)
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.filter_by(good=color).paginate(
         page, per_page=current_app.config['FLASKY_RATE_PER_PAGE'],
         error_out=False)
     comments = pagination.items
-    return render_template('index.html', pagination=pagination, comments=comments, colors=good_colors,
-                           current_color=color)
+    first_exist = Comment.query.first()
+    return render_template('index.html', pagination=pagination, comments=comments,
+                           colors=good_colors, current_color=color,
+                           first_exist=first_exist)
 
 
 @main.route('/delete/<id>')
 def delete_rate(id):
-    flash('id : %s 已删除.' % id,'alert alert-success')
+    flash('id : %s 已删除.' % id, 'alert alert-success')
     delete_id = Comment.query.filter_by(com_id=id).first()
     db.session.delete(delete_id)
     db.session.commit()
@@ -52,8 +56,15 @@ def delete_rate(id):
 
 @main.route('/refresh_data')
 def refresh_data():
-    flash('data已刷新.', 'alert alert-info')
-    Comment.generate_data()
+    from sqlalchemy.exc import IntegrityError
+
+    try:
+        Comment.generate_data()
+    except IntegrityError:
+        db.session.rollback()
+        flash('不用更新.', 'alert alert-info')
+    else:
+        flash('data已刷新.', 'alert alert-info')
     return redirect(url_for('.index'))
 
 

@@ -44,8 +44,12 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{url_for('main.refresh_data')}}">刷新数据</a></li>
-                <li><a href="{{url_for('main.delete_data')}}">清空数据</a></li>
+
+                <li {% if not first_exist %} class="disabled" {% endif %}><a
+                        href="{{url_for('main.delete_data')}}">清空数据</a></li>
+                <li {% if first_exist %} class="disabled" {% endif %}><a
+                        href="{{url_for('main.refresh_data')}}">刷新数据</a></li>
+
             </ul>
         </div>
     </div>

@@ -10,19 +10,9 @@
 </head>
 <body>
 
-{% set end=session['past_endpoint'] %}
-<h1>past_endpoint : {{end}}</h1>
-{% set path=session['past_path'] %}
-<h1>past_path : {{path}}</h1>
-{% set sth=session['past_sth'] %}
-<h1>past_sth : {{sth}}</h1>
-<br>
-
-<h1>now_endpoint : {{request.endpoint}}</h1>
-<h1>now_parh : {{request.path}}</h1>
-<br>
+<h1>comment type : {{comment|turn_type}}</h1>
+<h1>comment first_exist : {{first.com_id}}</h1>
 
 
-<h1>now_sth : {{request.url_rule}}</h1>
 </body>
 </html>
